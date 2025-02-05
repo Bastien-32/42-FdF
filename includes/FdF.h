@@ -6,7 +6,7 @@
 /*   By: badal-la <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 11:05:12 by badal-la          #+#    #+#             */
-/*   Updated: 2025/01/28 17:06:34 by badal-la         ###   ########.fr       */
+/*   Updated: 2025/02/05 11:37:19 by badal-la         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,24 +17,28 @@
 # include "../libft/libft.h"
 # include "../get_next_line/get_next_line_bonus.h"
 
+# include "../minilibx-linux/mlx.h"
+
 # include <errno.h>
 # include <fcntl.h>
-#include <stdio.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <math.h>
 
 typedef struct s_point
 {
-	float	x;
-	float	y;
-	float	z;
+	int		x;
+	int		y;
+	int		z;
+	int		color;
 }			t_point;
 
-typedef struct s_info_map
+typedef struct s_map
 {
-	int	max_x;
-	int	max_y;
-	int	min_z;
-	int	max_z;
-}			t_info_map;
+	int		width;
+	int		height;
+	t_point	**grid;
+}			t_map;
 
 
 int	error(char *message);

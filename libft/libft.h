@@ -6,7 +6,7 @@
 /*   By: badal-la <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 10:22:07 by badal-la          #+#    #+#             */
-/*   Updated: 2025/01/28 16:29:31 by badal-la         ###   ########.fr       */
+/*   Updated: 2025/02/04 14:57:14 by badal-la         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ typedef struct s_list
 }					t_list;
 
 int		ft_atoi(const char *str);
+
+int	ft_atoi_base(char *str, char *base);
 
 void	*ft_bzero(void *s, size_t n);
 /* Assigne a une chaine de caractere s n fois le caractere 0 

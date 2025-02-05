@@ -6,127 +6,83 @@
 /*   By: badal-la <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 11:02:32 by badal-la          #+#    #+#             */
-/*   Updated: 2025/01/28 18:10:53 by badal-la         ###   ########.fr       */
+/*   Updated: 2025/02/05 16:01:06 by badal-la         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "FdF.h"
 
-t_point	**fill_points(char *line, t_point **point, int i, int j)
-{
-	while (line[j])
-	{
-		if (line[j] == ' ')
-			j++;
-		else
-		{
-			point[i][j].x = j;
-			point[i][j].y = i;
-			point[i][j].z = ft_atoi(&line[j]);
-			while (line[j] && line[j] != ' ')
-				j++;
-		}
-	}
-	return (point);
-}
+#define WIDTH 800
+#define HEIGHT 600
 
-t_point	**read_and_extract(char *file, t_point **point)
+void	fill_width_map(char *file, t_map *map)
 {
-	int		fd;
+	int 	fd;
 	char	*line;
-	int		i;
-	int		j;
 
 	fd = open(file, O_RDONLY);
-	if (fd == -1)
-		error("Could not open file"); // si je l'ai vérifié avant est ce necessaire ou bien la réouverture peut mal s'effectuer?
-	i = 0;
-	while (get_next_line(fd) > 0)
-	{
-		j = 0;
-		line = get_next_line(fd);
-		point = fill_points(line, point, i, j);
-		i++;
-	}
-	close(fd);
-	return (point);
-}
-
-void	check_and_info_map(char *file, t_info_map *info)
-{
-	int			fd;
-	char		*line;
-
-	fd = open(file, O_RDONLY);
-	if (fd == -1)
-		error("Could not open file");
+	if (fd < 0)
+		error("Opening file failed");
 	line = get_next_line(fd);
-	if (!line)
-		error_fd_open("Map is empty\n", fd, NULL);
-	info->max_x = ft_nwords(line, ' ');
-	info->max_y = 1;
-	info->min_z = 0;
-	info->max_z = 0;
-	free(line);
+	printf("line = %s", line);
+	map->width = ft_nwords(line, ' ');
+	printf("width = %d\n", map->width);
+	close(fd);
+}
+void	fill_height_map(char *file, t_map *map)
+{
+	int 	fd;
+	char	*line;
+	int		line_count = 0;  // Compteur de lignes lues
+	
+	fd = open(file, O_RDONLY);
+	if (fd < 0)
+		error("Opening file failed");
+
+	line = get_next_line(fd);
 	while (line)
 	{
-		line = get_next_line(fd);
-		if (!line)
-			break ;
-		if (ft_nwords(line, ' ') != (*info).max_x)
-			error_fd_open("Map is not valid (Number columns)\n", fd, line);
-		(*info).max_y++;
+		line_count++; // Incrémentation du compteur
+		printf("DEBUG: Ligne %d = %s\n", line_count, line);
+
+		if (ft_nwords(line, ' ') != map->width)
+		{
+			printf("line = %s \nnwords line = %d | width = %d\n", line, ft_nwords(line, ' '), map->width);
+			error_fd_open("Map is not rectangle", fd, line);
+		}
+		if (line[0] != '\n' && line[0] != '\0')
+			map->height++;
+		
 		free(line);
+		line = get_next_line(fd);
 	}
+	printf("DEBUG: Nombre total de lignes lues = %d\n", line_count); // Vérification finale
 	close(fd);
 }
 
-int main(int ac, char **av)
+t_map	*parse_map(char *file)
 {
-	t_info_map	info;
-	t_point		**point;
-
-	**point = 0;
-	errno = 0;
-	if (ac != 2)
-		error("Usage: ./FdF map.fdf");
-	check_and_info_map(av[1], &info);
-	read_and_extract(av[1], point);
-	int i = 0;
-	int j = 0;
-	while (point[j])
-	{
-		i = 0;
-		while (point[j][i].x != 0 || point[j][i].y != 0 || point[j][i].z != 0)
-		{
-			ft_printf("%d ", point[j][i].z);
-			i++;
-		}
-		ft_printf("\n");
-		j++;
-	}
+	t_map	*map;
+	
+	map = (t_map *)malloc(sizeof(t_map));
+	if (!map)
+		error("Malloc map failed");
+	ft_bzero(map, sizeof(t_map));
+	fill_width_map(file, map);
+	fill_height_map(file, map);
+	return (map);
 }
 
+int	main(int argc, char **argv)
+{
+	t_map	*map;
+
+	if (argc != 2)
+        error("Usage: ./fdf map.fdf");
+    map = parse_map(argv[1]);
+	printf("width = %d | height = %d\n", map->width, map->height);
 
 
-/* 
-#extraire les points dans une structure
-#			sorties d'erreurs :	
-#					- fd pas trouvé
-#					- fichier vide
-#					- check meme nombre de points pour toutes les ligne
-#					- check si les points sont des nombres entiers
-#						(négatifs ok?)
-#						(limites int?)
-#extraire les points dans une structure
+	return (0);
+}
 
-relier les points
-mettre z en relief
-rendu visuel
-gestion fenetre :
-	- rotation
-	- deplacement
-	- zoom
-	- couleur
-	- menu (infos)
- */

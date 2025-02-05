@@ -6,7 +6,7 @@
 /*   By: badal-la <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 18:23:24 by badal-la          #+#    #+#             */
-/*   Updated: 2025/01/28 17:05:51 by badal-la         ###   ########.fr       */
+/*   Updated: 2025/02/04 13:54:57 by badal-la         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ int	error_fd_open(char *message, int fd, char *line)
 	exit (1);
 }
 
-
 void	free_args_and_exit(char **tab, char *message)
 {
 	int	i;
@@ -46,5 +45,4 @@ void	free_args_and_exit(char **tab, char *message)
 		free(tab[i]);
 	free(tab);
 	error(message);
-	exit(1);
 }
