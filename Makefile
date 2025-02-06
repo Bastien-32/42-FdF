@@ -6,7 +6,7 @@
 #    By: student <student@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/23 19:45:10 by badal-la          #+#    #+#              #
-#    Updated: 2025/02/06 16:42:00 by student          ###   ########.fr        #
+#    Updated: 2025/02/06 17:32:24 by student          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -118,6 +118,8 @@ re:	fclean all
 test: $(NAME)
 	./$(NAME) map.fdf
 
+vtest: $(NAME)
+	valgrind ./$(NAME) map.fdf
 ##############################################################################
 
 .PHONY: all clean fclean re test
