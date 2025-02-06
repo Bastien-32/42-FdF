@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
+/*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: student <student@student.42.fr>            +#+  +:+       +#+        */
+/*   By: badal-la <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/26 11:02:42 by badal-la          #+#    #+#             */
-/*   Updated: 2025/02/06 16:44:20 by student          ###   ########.fr       */
+/*   Updated: 2024/11/28 16:30:35 by badal-la         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line_bonus.h"
+#include "get_next_line.h"
 
 char	*search_bsn_and_stash(int fd, char *str)
 {
@@ -19,7 +19,7 @@ char	*search_bsn_and_stash(int fd, char *str)
 
 	buffer = ft_calloc((BUFFER_SIZE + 1), sizeof(char));
 	bytes_read = 1;
-	while (bytes_read != 0 && ft_strchr_gnl(str, '\n') == NULL)
+	while (bytes_read != 0 && ft_strchr(str, '\n') == NULL)
 	{
 		bytes_read = read (fd, buffer, BUFFER_SIZE);
 		if (bytes_read < 0)
@@ -29,7 +29,7 @@ char	*search_bsn_and_stash(int fd, char *str)
 			return (free(buffer), NULL);
 		}
 		buffer[bytes_read] = '\0';
-		str = ft_strjoin_gnl(str, buffer);
+		str = ft_strjoin(str, buffer);
 	}
 	return (free(buffer), str);
 }
@@ -48,7 +48,7 @@ char	*write_line(char *str)
 		i++;
 	if (str[i] == '\n')
 		add_bsn = 1;
-	line = ft_substr_gnl(str, 0, i + add_bsn);
+	line = ft_substr(str, 0, i + add_bsn);
 	return (line);
 }
 
@@ -62,7 +62,7 @@ char	*stash_after_bsn(char *str)
 		return (free(str), NULL);
 	while (str[i] && str[i] != '\n')
 		i++;
-	line = ft_substr_gnl(str, i + 1, ft_strlen(str));
+	line = ft_substr(str, i + 1, ft_strlen(str));
 	if (!line[0])
 	{
 		free(str);
@@ -74,43 +74,28 @@ char	*stash_after_bsn(char *str)
 
 char	*get_next_line(int fd)
 {
-	static char	*str[10000];
+	static char	*str;
 	char		*line;
 
-	str[fd] = search_bsn_and_stash(fd, str[fd]);
-	if (!str[fd])
+	str = search_bsn_and_stash(fd, str);
+	if (!str)
 		return (NULL);
-	line = write_line(str[fd]);
-	str[fd] = stash_after_bsn(str[fd]);
+	line = write_line(str);
+	str = stash_after_bsn(str);
 	return (line);
 }
 
 /*
-#include <stdio.h>
-
-int main(void)
+int main (void)
 {
-	int	fd1;
-	int fd2;
+	int		fd;
 	char	*line;
-
-	fd1 = open("fd1.txt", O_RDONLY);
-	line = get_next_line(fd1);
+	
+	fd = open("fd1.txt", O_RDONLY);
+	line = get_next_line(fd);
 	printf("%s", line);
 	free(line);
-	fd2 = open("fd2.txt", O_RDONLY);
-	line = get_next_line(fd2);
+	line = get_next_line(fd);
 	printf("%s", line);
-	free(line);
-	line = get_next_line(fd1);
-	printf("%s", line);
-	free(line);
-	line = get_next_line(fd2);
-	printf("%s", line);
-	free(line);
-	line = get_next_line(fd1);
-	printf("%s", line);
-	close(fd1);
-	close(fd2);
 	free(line);
 }*/

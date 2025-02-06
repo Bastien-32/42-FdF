@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   errors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: badal-la <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: student <student@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 18:23:24 by badal-la          #+#    #+#             */
-/*   Updated: 2025/02/04 13:54:57 by badal-la         ###   ########.fr       */
+/*   Updated: 2025/02/06 11:02:56 by student          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	error_fd_open(char *message, int fd, char *line)
 	exit (1);
 }
 
-void	free_args_and_exit(char **tab, char *message)
+void	free_args_and_exit(void **tab, char *message)
 {
 	int	i;
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   FdF.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: badal-la <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: student <student@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 11:05:12 by badal-la          #+#    #+#             */
-/*   Updated: 2025/02/05 11:37:19 by badal-la         ###   ########.fr       */
+/*   Updated: 2025/02/06 11:38:07 by student          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,6 @@ int	error(char *message);
 
 int	error_fd_open(char *message, int fd, char *line);
 
-void	free_args_and_exit(char **tab, char *message);
+void	free_args_and_exit(void **tab, char *message);
 
 #endif

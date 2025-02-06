@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: badal-la <marvin@42.fr>                    +#+  +:+       +#+         #
+#    By: student <student@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/23 19:45:10 by badal-la          #+#    #+#              #
-#    Updated: 2025/02/05 14:58:58 by badal-la         ###   ########.fr        #
+#    Updated: 2025/02/06 16:42:00 by student          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,15 +34,15 @@ GNL_OBJS = $(GNL_SRCS:.c=.o)
 
 UNAME := $(shell uname)
 
-ifeq ($(UNAME), Linux)
-	MLX_DIR = $(MLX_LINUX_DIR)
-	MLX = $(MLX_LINUX_DIR)/libmlx.a
-	MLX_FLAGS = -L $(MLX_DIR) -lmlx -lX11 -lXext -lm
-else
-	MLX_DIR = $(MLX_MAC_DIR)
-	MLX = $(MLX_MAC_DIR)/libmlx.a
-	MLX_FLAGS = -L $(MLX_DIR) -lmlx -framework OpenGL -framework AppKit -I /opt/X11/include -L /opt/X11/lib
-endif
+#ifeq ($(UNAME), Linux)
+MLX_DIR = $(MLX_LINUX_DIR)
+MLX = $(MLX_LINUX_DIR)/libmlx.a
+MLX_FLAGS = -L $(MLX_DIR) -lmlx -lX11 -lXext -lm
+#else
+#	MLX_DIR = $(MLX_MAC_DIR)
+#	MLX = $(MLX_MAC_DIR)/libmlx.a
+#	MLX_FLAGS = -L $(MLX_DIR) -lmlx -framework OpenGL -framework AppKit -I /opt/X11/include -L /opt/X11/lib
+#endif
 
 # **************************************************************************** #
 #                                   MANDATORY                                  #
@@ -63,7 +63,7 @@ OBJ = $(SRC:.c=.o)
 
 NAME = fdf
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -g
 INCLUDE = -I $(INCLUDE_DIR) -I $(LIBFT_DIR) -I $(PRINTF_DIR) -I $(MLX_DIR)
 
 # **************************************************************************** #
