@@ -6,7 +6,7 @@
 /*   By: student <student@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 18:23:24 by badal-la          #+#    #+#             */
-/*   Updated: 2025/02/07 16:58:22 by student          ###   ########.fr       */
+/*   Updated: 2025/02/08 12:17:12 by student          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	error_mlx_malloc(t_map *map, char *message)
 	error(message);
 }
 
-void error_mlx_init(t_map *map, t_mlx *mlx, char *message)
+void	error_mlx_init(t_map *map, t_mlx *mlx, char *message)
 {
 	free_map(map);
 	free(mlx);
@@ -73,20 +73,6 @@ void	free_tab_2d_args(char **arg)
 	}
 	free(arg);
 }
-
-//a deplacer dans une autre fichier
-/* void	free_t_point_args(t_point **grid, int height)
-{
-	int i;
-
-	i = 0;
-	while (i < height)
-	{
-		free(grid[i]);
-		i++;
-	}
-	free(grid);
-} */
 
 //a deplacer dans une autre fichier
 void	free_map(t_map *map)

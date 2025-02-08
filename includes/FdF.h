@@ -6,7 +6,7 @@
 /*   By: student <student@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 11:05:12 by badal-la          #+#    #+#             */
-/*   Updated: 2025/02/08 11:59:20 by student          ###   ########.fr       */
+/*   Updated: 2025/02/08 12:46:47 by student          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,11 @@ typedef struct s_mlx
 	char	*img_data;
 	int		width_win;
 	int		height_win;
+	int		drawable_with;
+	int		drawable_height;
+	int		panel_width;
+	int		offset_x;
+	int		offset_y;
 	int		bits_per_pixel;
 	int		size_line;
 	int		endian;

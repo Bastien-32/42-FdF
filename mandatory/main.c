@@ -6,7 +6,7 @@
 /*   By: student <student@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 11:02:32 by badal-la          #+#    #+#             */
-/*   Updated: 2025/02/08 12:13:01 by student          ###   ########.fr       */
+/*   Updated: 2025/02/08 12:49:53 by student          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,7 +140,7 @@ void	init_mlx(t_mlx **mlx, t_map *map, char *title)
 	if (!*mlx)
 		error_mlx_malloc(map, "Failed to allocate memory for mlx structure");
 	(*mlx)->width_win = 1600;
-	(*mlx)->height_win = 1200;(*mlx)->width_win = 1600;
+	(*mlx)->height_win = 1200;
 	(*mlx)->mlx_ptr = mlx_init();
 	if (!(*mlx)->mlx_ptr)
 		error_mlx_init(map, *mlx, "Failed to initialize MiniLibX\n");
@@ -149,10 +149,14 @@ void	init_mlx(t_mlx **mlx, t_map *map, char *title)
 	if (!(*mlx)->win_ptr)
 		error_mlx_init(map, *mlx, "Failed to create window\n");
 	(*mlx)->img_ptr = mlx_new_image((*mlx)->mlx_ptr, (*mlx)->width_win, \
-													(*mlx)->height_win);
-	(*mlx)->img_data = mlx_get_data_addr((*mlx)->img_ptr, &(*mlx)->bits_per_pixel, \
-												&(*mlx)->size_line, &(*mlx)->endian);
-	if ((*mlx)->width_win / (map->width + 1) < (*mlx)->height_win / (map->height + 1))
+														(*mlx)->height_win);
+	(*mlx)->img_data = mlx_get_data_addr((*mlx)->img_ptr, \
+				&(*mlx)->bits_per_pixel, &(*mlx)->size_line, &(*mlx)->endian);
+	(*mlx)->panel_width = (*mlx)->width_win / 6;
+	(*mlx)->drawable_with = (*mlx)->width_win - (*mlx)->panel_width;
+	(*mlx)->drawable_height = (*mlx)->height_win;
+	if ((*mlx)->width_win / (map->width + 1) 
+									< (*mlx)->height_win / (map->height + 1))
 		(*mlx)->zoom = (*mlx)->width_win / (map->width + 1);
 	else
 		(*mlx)->zoom = (*mlx)->height_win / (map->height + 1);
@@ -174,19 +178,18 @@ void draw_map_points(t_mlx *mlx, t_map *map)
 {
 	int	x;
 	int	y;
-	int	offset_x;
-	int	offset_y;
 
 	y = 0;
-	offset_x = (mlx->width_win - (map->width - 1) * mlx->zoom) / 2;
-	offset_y = (mlx->height_win - (map->height - 1) * mlx->zoom) / 2;
+	mlx->offset_x = mlx->panel_width
+					+ (mlx->drawable_with - (map->width - 1) * mlx->zoom) / 2;
+	mlx->offset_y = (mlx->height_win - (map->height - 1) * mlx->zoom) / 2;
 	while (y < map->height)
 	{
 		x = 0;
 		while (x < map->width)
 		{
-			int draw_x = map->grid[y][x].x * mlx->zoom + offset_x;
-			int draw_y = map->grid[y][x].y * mlx->zoom + offset_y;
+			int draw_x = map->grid[y][x].x * mlx->zoom + mlx->offset_x;
+			int draw_y = map->grid[y][x].y * mlx->zoom + mlx->offset_y;
 			put_pixel_to_image(mlx, draw_x, draw_y, map->grid[y][x].color);
 			x++;
 		}
@@ -221,8 +224,6 @@ int	main(int argc, char **argv)
 	draw_map_points(mlx, map);
 	mlx_loop(mlx->mlx_ptr);
 	free_map(map);
-	//free_t_point_args(map->grid, map->height);
-	//free(map);
 	return (0);
 }
 
