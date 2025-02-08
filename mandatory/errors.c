@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   errors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: student <student@student.42.fr>            +#+  +:+       +#+        */
+/*   By: badal-la <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 18:23:24 by badal-la          #+#    #+#             */
-/*   Updated: 2025/02/08 12:17:12 by student          ###   ########.fr       */
+/*   Updated: 2025/02/08 16:40:17 by badal-la         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,12 @@ int	error(char *message)
 	else
 		ft_printf("%s\n", message);
 	exit (1);
+}
+
+void	error_fd(char *message, t_map *map)
+{
+		free(map);
+		error(message);
 }
 
 int	error_fd_open(char *message, int fd, char *line)
@@ -79,12 +85,32 @@ void	free_map(t_map *map)
 {
 	int i;
 
+	if (!map)
+		return;
+	if (!map->grid)
+	{
+		printf("DEBUG: map->grid n'est pas alloué\n");
+		free(map);
+		return;
+	}
 	i = 0;
+	printf("map height = %d\n", map->height);
 	while (i < map->height)
 	{
-		free(map->grid[i]);
+		if (map->grid[i])
+		{
+			printf("DEBUG: Libération de map->grid[%d]\n", i);
+			free(map->grid[i]);
+		}
+		else
+			printf("DEBUG: map->grid[%d] n'est pas alloué\n", i);
 		i++;
 	}
+
+	printf("DEBUG: Libération de map->grid\n");
 	free(map->grid);
+	map->grid = NULL;
+
+	printf("DEBUG: Libération de la structure map\n");
 	free(map);
 }

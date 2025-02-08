@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: student <student@student.42.fr>            +#+  +:+       +#+         #
+#    By: badal-la <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/23 19:45:10 by badal-la          #+#    #+#              #
-#    Updated: 2025/02/08 13:11:23 by student          ###   ########.fr        #
+#    Updated: 2025/02/08 17:39:43 by badal-la         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,23 +34,26 @@ GNL_OBJS = $(GNL_SRCS:.c=.o)
 
 UNAME := $(shell uname)
 
-#ifeq ($(UNAME), Linux)
-MLX_DIR = $(MLX_LINUX_DIR)
-MLX = $(MLX_LINUX_DIR)/libmlx.a
-MLX_FLAGS = -L $(MLX_DIR) -lmlx -lX11 -lXext -lm
-#else
-#	MLX_DIR = $(MLX_MAC_DIR)
-#	MLX = $(MLX_MAC_DIR)/libmlx.a
-#	MLX_FLAGS = -L $(MLX_DIR) -lmlx -framework OpenGL -framework AppKit -I /opt/X11/include -L /opt/X11/lib
-#endif
+ifeq ($(UNAME), Linux)
+	MLX_DIR = $(MLX_LINUX_DIR)
+	MLX = $(MLX_LINUX_DIR)/libmlx.a
+	MLX_FLAGS = -L $(MLX_DIR) -lmlx -lX11 -lXext -lm
+else
+	MLX_DIR = $(MLX_MAC_DIR)
+	MLX = $(MLX_MAC_DIR)/libmlx.a
+	MLX_FLAGS = -L $(MLX_DIR) -lmlx -framework OpenGL -framework AppKit -I /opt/X11/include -L /opt/X11/lib
+endif
 
 # **************************************************************************** #
 #                                   MANDATORY                                  #
 # **************************************************************************** #
 
-SRC =	mandatory/main.c \
+SRC =	mandatory/commands_in_win.c \
+		mandatory/draw_map_lines.c \
+		mandatory/draw_map_points.c \
 		mandatory/errors.c \
-		mandatory/commands_in_win.c
+		mandatory/main.c \
+		mandatory/parse_map.c
 
 OBJ = $(SRC:.c=.o)
 
@@ -120,7 +123,7 @@ test: $(NAME)
 	./$(NAME) test_maps/t2.fdf
 
 vtest: $(NAME)
-	valgrind --leak-check=full --show-leak-kinds=all ./$(NAME) 42.fdf
+	valgrind --leak-check=full --show-leak-kinds=all ./$(NAME) test_maps/42.fdf
 ##############################################################################
 
 .PHONY: all clean fclean re test
