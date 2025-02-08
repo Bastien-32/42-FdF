@@ -6,7 +6,7 @@
 /*   By: student <student@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 11:05:12 by badal-la          #+#    #+#             */
-/*   Updated: 2025/02/06 11:38:07 by student          ###   ########.fr       */
+/*   Updated: 2025/02/08 11:59:20 by student          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,28 @@ typedef struct s_map
 	t_point	**grid;
 }			t_map;
 
+typedef struct s_mlx
+{
+	void	*mlx_ptr;
+	void	*win_ptr;
+	void	*img_ptr;
+	char	*img_data;
+	int		width_win;
+	int		height_win;
+	int		bits_per_pixel;
+	int		size_line;
+	int		endian;
+	int		zoom;
+}			t_mlx;
 
 int	error(char *message);
-
 int	error_fd_open(char *message, int fd, char *line);
-
 void	free_args_and_exit(void **tab, char *message);
+void	error_mlx_malloc(t_map *map, char *message);
+void error_mlx_init(t_map *map, t_mlx *mlx, char *message);
+void	free_tab_2d_args(char **arg);
+//void	free_t_point_args(t_point **grid, int height);
+void	free_map(t_map *map);
+
 
 #endif

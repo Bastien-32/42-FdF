@@ -6,7 +6,7 @@
 #    By: student <student@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/23 19:45:10 by badal-la          #+#    #+#              #
-#    Updated: 2025/02/06 17:32:24 by student          ###   ########.fr        #
+#    Updated: 2025/02/07 16:03:27 by student          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -116,10 +116,10 @@ fclean: clean
 re:	fclean all
 
 test: $(NAME)
-	./$(NAME) map.fdf
+	./$(NAME) test_maps/t2.fdf
 
 vtest: $(NAME)
-	valgrind ./$(NAME) map.fdf
+	valgrind --leak-check=full --show-leak-kinds=all ./$(NAME) 42.fdf
 ##############################################################################
 
 .PHONY: all clean fclean re test

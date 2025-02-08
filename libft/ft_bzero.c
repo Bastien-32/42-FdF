@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_bzero.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: badal-la <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: student <student@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 10:18:05 by badal-la          #+#    #+#             */
-/*   Updated: 2024/11/17 12:02:26 by badal-la         ###   ########.fr       */
+/*   Updated: 2025/02/07 09:18:32 by student          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/* Assigns the character 0 (not '0') to a string s n times and returns s.
-   /!\ cast s to (unsigned char) */
+/* Assigns the character 0 (not '0') to a string s n times and returns s.*/
 
 #include "libft.h"
 
