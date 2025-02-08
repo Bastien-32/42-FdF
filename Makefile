@@ -6,7 +6,7 @@
 #    By: student <student@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/23 19:45:10 by badal-la          #+#    #+#              #
-#    Updated: 2025/02/07 16:03:27 by student          ###   ########.fr        #
+#    Updated: 2025/02/08 13:11:23 by student          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,7 +49,8 @@ MLX_FLAGS = -L $(MLX_DIR) -lmlx -lX11 -lXext -lm
 # **************************************************************************** #
 
 SRC =	mandatory/main.c \
-		mandatory/errors.c
+		mandatory/errors.c \
+		mandatory/commands_in_win.c
 
 OBJ = $(SRC:.c=.o)
 

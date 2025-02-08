@@ -6,7 +6,7 @@
 /*   By: student <student@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 11:02:32 by badal-la          #+#    #+#             */
-/*   Updated: 2025/02/08 12:49:53 by student          ###   ########.fr       */
+/*   Updated: 2025/02/08 13:08:56 by student          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -206,24 +206,11 @@ int	main(int argc, char **argv)
 	if (argc != 2)
         error("Usage: ./fdf map.fdf");
     map = parse_map(argv[1]);
-	
-	int x = 0;
-	
-	while (x < map->height)
-	{
-		int y = 0;
-		while (y < map->width)
-		{
-			printf("%d,%X ", map->grid[x][y].z, map->grid[x][y].color);
-			y++;
-		}
-		printf("\n");
-		x++;
-	}
 	init_mlx(&mlx, map, "FdF");
 	draw_map_points(mlx, map);
+	mlx_hook(mlx->win_ptr, 17, 0, close_program, mlx);
+	mlx_hook(mlx->win_ptr, 2, 1L << 0, key_press, mlx); 
 	mlx_loop(mlx->mlx_ptr);
-	free_map(map);
 	return (0);
 }
 

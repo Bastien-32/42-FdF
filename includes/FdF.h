@@ -6,7 +6,7 @@
 /*   By: student <student@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 11:05:12 by badal-la          #+#    #+#             */
-/*   Updated: 2025/02/08 12:46:47 by student          ###   ########.fr       */
+/*   Updated: 2025/02/08 13:06:30 by student          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,5 +68,8 @@ void	free_tab_2d_args(char **arg);
 //void	free_t_point_args(t_point **grid, int height);
 void	free_map(t_map *map);
 
+
+int close_program(t_mlx *mlx, t_map *map);
+int key_press(int keycode, t_mlx *mlx);
 
 #endif
