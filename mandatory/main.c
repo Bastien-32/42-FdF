@@ -6,7 +6,7 @@
 /*   By: badal-la <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 11:02:32 by badal-la          #+#    #+#             */
-/*   Updated: 2025/02/08 17:40:15 by badal-la         ###   ########.fr       */
+/*   Updated: 2025/02/09 11:45:52 by badal-la         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ int	main(int argc, char **argv)
         error("Usage: ./fdf map.fdf");
     map = parse_map(argv[1]);
 	init_mlx(&mlx, map, "FdF");
-	draw_map_points(mlx, map);
 	draw_map_lines(mlx, map);
 	mlx->map = map;
 	mlx_hook(mlx->win_ptr, 17, 0, close_program, mlx);

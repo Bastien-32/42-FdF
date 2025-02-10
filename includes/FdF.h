@@ -6,7 +6,7 @@
 /*   By: badal-la <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 11:05:12 by badal-la          #+#    #+#             */
-/*   Updated: 2025/02/08 17:41:39 by badal-la         ###   ########.fr       */
+/*   Updated: 2025/02/09 11:16:10 by badal-la         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@
 # include <stdlib.h>
 # include <math.h>
 
+# define ISO_ANGLE 0.523599  // 30° en radians
+# define PERSPECTIVE_ANGLE 0.785398 // 45° en radians
 typedef struct s_point
 {
 	int		x;
@@ -57,6 +59,8 @@ typedef struct s_mlx
 	int		size_line;
 	int		endian;
 	int		zoom;
+	int		altitude_scale;
+	int		projection_type;
 	t_map	*map;
 }			t_mlx;
 
@@ -110,6 +114,8 @@ void draw_map_points(t_mlx *mlx, t_map *map);
 **************************************************************************** */
 
 void    init_bresenham(t_bresenham *b, t_point p1, t_point p2);
+t_point project_iso(t_point p, t_mlx *mlx);
+t_point project_perspective(t_point p, t_mlx *mlx);
 void    draw_line(t_mlx *mlx, t_point p1, t_point p2);
 void    draw_map_lines(t_mlx *mlx, t_map *map);
 

@@ -6,7 +6,7 @@
 #    By: badal-la <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/23 19:45:10 by badal-la          #+#    #+#              #
-#    Updated: 2025/02/08 17:39:43 by badal-la         ###   ########.fr        #
+#    Updated: 2025/02/09 12:46:47 by badal-la         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -120,7 +120,7 @@ fclean: clean
 re:	fclean all
 
 test: $(NAME)
-	./$(NAME) test_maps/t2.fdf
+	./$(NAME) test_maps/42.fdf
 
 vtest: $(NAME)
 	valgrind --leak-check=full --show-leak-kinds=all ./$(NAME) test_maps/42.fdf

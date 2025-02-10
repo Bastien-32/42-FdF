@@ -6,12 +6,11 @@
 /*   By: badal-la <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 17:19:38 by badal-la          #+#    #+#             */
-/*   Updated: 2025/02/08 17:20:13 by badal-la         ###   ########.fr       */
+/*   Updated: 2025/02/09 12:03:31 by badal-la         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "FdF.h"
-
 
 void	init_mlx(t_mlx **mlx, t_map *map, char *title)
 {
@@ -19,7 +18,7 @@ void	init_mlx(t_mlx **mlx, t_map *map, char *title)
 	if (!*mlx)
 		error_mlx_malloc(map, "Failed to allocate memory for mlx structure");
 	(*mlx)->width_win = 1600;
-	(*mlx)->height_win = 1200;
+	(*mlx)->height_win = 1000;
 	(*mlx)->mlx_ptr = mlx_init();
 	if (!(*mlx)->mlx_ptr)
 		error_mlx_init(map, *mlx, "Failed to initialize MiniLibX\n");
@@ -34,11 +33,13 @@ void	init_mlx(t_mlx **mlx, t_map *map, char *title)
 	(*mlx)->panel_width = (*mlx)->width_win / 6;
 	(*mlx)->drawable_with = (*mlx)->width_win - (*mlx)->panel_width;
 	(*mlx)->drawable_height = (*mlx)->height_win;
-	if ((*mlx)->width_win / (map->width + 1) 
-									< (*mlx)->height_win / (map->height + 1))
-		(*mlx)->zoom = (*mlx)->width_win / (map->width + 1);
+	if ((*mlx)->drawable_with / (map->width + 1) 
+								< (*mlx)->drawable_height / (map->height + 1))
+		(*mlx)->zoom = (*mlx)->drawable_with / (map->width + 1);
 	else
-		(*mlx)->zoom = (*mlx)->height_win / (map->height + 1);
+		(*mlx)->zoom = (*mlx)->drawable_height / (map->height + 1);
+	(*mlx)->projection_type = 0;
+    (*mlx)->altitude_scale = 1;
 }
 
 void put_pixel_to_image(t_mlx *mlx, int x, int y, int color)
@@ -57,19 +58,23 @@ void draw_map_points(t_mlx *mlx, t_map *map)
 {
 	int	x;
 	int	y;
+	t_point projected;
 
 	y = 0;
-	mlx->offset_x = mlx->panel_width
-					+ (mlx->drawable_with - (map->width - 1) * mlx->zoom) / 2;
-	mlx->offset_y = (mlx->height_win - (map->height - 1) * mlx->zoom) / 2;
+	mlx->offset_x = mlx->panel_width + (mlx->drawable_with 
+			- ((map->width - map->height) * cos(ISO_ANGLE) * mlx->zoom)) / 2;
+	mlx->offset_y = (mlx->height_win 
+			- ((map->width + map->height) * sin(ISO_ANGLE) * mlx->zoom)) / 2;
 	while (y < map->height)
 	{
 		x = 0;
 		while (x < map->width)
 		{
-			int draw_x = map->grid[y][x].x * mlx->zoom + mlx->offset_x;
-			int draw_y = map->grid[y][x].y * mlx->zoom + mlx->offset_y;
-			put_pixel_to_image(mlx, draw_x, draw_y, map->grid[y][x].color);
+			if (mlx->projection_type == 0)
+				projected = project_iso(map->grid[y][x], mlx);
+			else
+				projected = project_perspective(map->grid[y][x], mlx);
+			put_pixel_to_image(mlx, projected.x, projected.y, projected.color);
 			x++;
 		}
 		y++;

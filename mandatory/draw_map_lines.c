@@ -6,7 +6,7 @@
 /*   By: badal-la <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 17:37:33 by badal-la          #+#    #+#             */
-/*   Updated: 2025/02/08 17:46:48 by badal-la         ###   ########.fr       */
+/*   Updated: 2025/02/09 12:48:58 by badal-la         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,30 +31,63 @@ void    init_bresenham(t_bresenham *b, t_point p1, t_point p2)
     b->err = b->dx - b->dy;
 }
 
+t_point project_iso(t_point p, t_mlx *mlx)
+{
+    t_point projected;
+
+    projected.x = (p.x - p.y) * cos(ISO_ANGLE) * mlx->zoom + mlx->offset_x;
+    projected.y = (p.x + p.y) * sin(ISO_ANGLE) * mlx->zoom 
+                  - (p.z * mlx->altitude_scale) + mlx->offset_y;
+    projected.color = p.color;
+    return (projected);
+}
+
+t_point project_perspective(t_point p, t_mlx *mlx)
+{
+    t_point projected;
+    float distance;
+    float z_factor;
+
+    distance = 1000.0; // Distance de la caméra, à ajuster
+    z_factor = 1 + (p.z / distance);
+    projected.x = (p.x - mlx->width_win / 2) * z_factor + mlx->width_win / 2 + mlx->offset_x;
+    projected.y = (p.y - mlx->height_win / 2) * z_factor + mlx->height_win / 2 - (p.z * mlx->altitude_scale) + mlx->offset_y;
+    projected.color = p.color;
+    return (projected);
+}
+
 void    draw_line(t_mlx *mlx, t_point p1, t_point p2)
 {
     t_bresenham b;
+    t_point proj_p1;
+    t_point proj_p2;
 
-    p1.x = p1.x * mlx->zoom + mlx->offset_x;
-    p1.y = p1.y * mlx->zoom + mlx->offset_y;
-    p2.x = p2.x * mlx->zoom + mlx->offset_x;
-    p2.y = p2.y * mlx->zoom + mlx->offset_y;
-    init_bresenham(&b, p1, p2);
+    if (mlx->projection_type == 0)
+    {
+        proj_p1 = project_iso(p1, mlx);
+        proj_p2 = project_iso(p2, mlx);
+    }
+    else
+    {
+        proj_p1 = project_perspective(p1, mlx);
+        proj_p2 = project_perspective(p2, mlx);
+    }
+    init_bresenham(&b, proj_p1, proj_p2);
     while (1)
     {
-        put_pixel_to_image(mlx, p1.x, p1.y, p1.color);
-        if (p1.x == p2.x && p1.y == p2.y)
+        put_pixel_to_image(mlx, proj_p1.x, proj_p1.y, p1.color);
+        if (proj_p1.x == proj_p2.x && proj_p1.y == proj_p2.y)
             break;
         b.e2 = 2 * b.err;
         if (b.e2 > -b.dy)
         {
             b.err = b.err - b.dy;
-            p1.x = p1.x + b.sx;
+            proj_p1.x = proj_p1.x + b.sx;
         }
         if (b.e2 < b.dx)
         {
             b.err = b.err + b.dx;
-            p1.y = p1.y + b.sy;
+            proj_p1.y = proj_p1.y + b.sy;
         }
     }
 } 
@@ -78,5 +111,6 @@ void    draw_map_lines(t_mlx *mlx, t_map *map)
         }
         y++;
     }
+    draw_map_points(mlx, map);
     mlx_put_image_to_window(mlx->mlx_ptr, mlx->win_ptr, mlx->img_ptr, 0, 0);
 } 
