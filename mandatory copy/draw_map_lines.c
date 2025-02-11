@@ -6,7 +6,7 @@
 /*   By: badal-la <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 17:37:33 by badal-la          #+#    #+#             */
-/*   Updated: 2025/02/10 16:36:03 by badal-la         ###   ########.fr       */
+/*   Updated: 2025/02/09 12:48:58 by badal-la         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,11 +94,10 @@ void    draw_line(t_mlx *mlx, t_point p1, t_point p2)
 
 void    draw_map_lines(t_mlx *mlx, t_map *map)
 {
-    //int x;
-    //int y;
+    int x;
+    int y;
 
-    draw_map_points(mlx, map);
-    /* y = 0;
+    y = 0;
     while (y < map->height)
     {
         x = 0;
@@ -111,6 +110,7 @@ void    draw_map_lines(t_mlx *mlx, t_map *map)
             x++;
         }
         y++;
-    } */
+    }
+    draw_map_points(mlx, map);
     mlx_put_image_to_window(mlx->mlx_ptr, mlx->win_ptr, mlx->img_ptr, 0, 0);
 } 

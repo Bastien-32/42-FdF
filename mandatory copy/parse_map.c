@@ -6,7 +6,7 @@
 /*   By: badal-la <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 17:15:01 by badal-la          #+#    #+#             */
-/*   Updated: 2025/02/11 11:20:17 by badal-la         ###   ########.fr       */
+/*   Updated: 2025/02/08 17:15:19 by badal-la         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,34 +113,6 @@ void	fill_map(char *file, t_map *map)
 	close(fd);
 }
 
-void	fill_z_max_and_min(t_map *map)
-{
-	int	y;
-	int	x;
-	
-	y = 0;
-	map->min_z = map->grid[0][0].z;
-	map->max_z = map->grid[0][0].z;
-	while (y < map->height)
-	{
-		x = 0;
-		while (x < map->width)
-		{
-			if (map->grid[y][x].z < map->min_z)
-				map->min_z = map->grid[y][x].z;
-			if (map->grid[y][x].z > map->max_z)
-				map->max_z = map->grid[y][x].z;
-			x++;
-		}
-		y++;
-	}
-}
-
-void	fill_mean_positions(map)
-{
-	
-}
-
 t_map	*parse_map(char *file)
 {
 	t_map	*map;
@@ -152,7 +124,5 @@ t_map	*parse_map(char *file)
 	fill_width_map(file, map);
 	fill_height_map(file, map);
 	fill_map(file, map);
-	fill_z_max_and_min(map);
-	fill_mean_positions(map);
 	return (map);
 }

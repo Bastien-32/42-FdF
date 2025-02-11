@@ -6,7 +6,7 @@
 /*   By: badal-la <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 11:05:12 by badal-la          #+#    #+#             */
-/*   Updated: 2025/02/11 10:58:45 by badal-la         ###   ########.fr       */
+/*   Updated: 2025/02/10 12:51:50 by badal-la         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,6 @@ typedef struct s_map
 {
 	int		width;
 	int		height;
-	int		min_z;
-	int		max_z;
 	t_point	**grid;
 }			t_map;
 
@@ -54,18 +52,20 @@ typedef struct s_mlx
 	void	*win_ptr;
 	void	*img_ptr;
 	char	*img_data;
+	int		width_win;
+	int		height_win;
+	int		width_win;
 	int		panel_width;
-	int		drawable_width;
+	int		drawable_with;
 	int		drawable_height;
 	int		offset_x;
 	int		offset_y;
-	int		bpp;
+	int		bits_per_pixel;
 	int		size_line;
 	int		endian;
 	int		zoom;
-	double	width_iso;
-	double	height_iso;
-	double	min_y;
+	int		altitude_scale;
+	int		projection_type;
 	t_map	*map;
 }			t_mlx;
 
@@ -105,15 +105,14 @@ void	fill_height_map(char *file, t_map *map);
 void	fill_point(char *line, t_map *map, int y);
 void	fill_map(char *file, t_map *map);
 t_map	*parse_map(char *file);
-void	fill_z_max_and_min(t_map *map);
 
 /* ****************************************************************************
 								draw_map_points
 **************************************************************************** */
 
-void	init_mlx(t_mlx *mlx, t_map *map, char *title);
-void	put_pixel_to_image(t_mlx *mlx, int x, int y, int color);
-void	draw_map_points(t_mlx *mlx, t_map *map);
+void	init_mlx(t_mlx **mlx, t_map *map, char *title);
+void put_pixel_to_image(t_mlx *mlx, int x, int y, int color);
+void draw_map_points(t_mlx *mlx, t_map *map);
 
 /* ****************************************************************************
 								draw_map_lines
