@@ -6,7 +6,7 @@
 /*   By: badal-la <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 13:05:56 by student           #+#    #+#             */
-/*   Updated: 2025/02/09 11:15:16 by badal-la         ###   ########.fr       */
+/*   Updated: 2025/02/13 09:39:48 by badal-la         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,10 +50,10 @@ int key_press(int keycode, t_mlx *mlx)
 {
 	if (keycode == 53 || keycode == 65307)
 		close_program(mlx);
-	if (keycode == 49)
+	/*if (keycode == 49)
 	{
 		mlx->projection_type = (mlx->projection_type + 1) % 2; // 0 = iso, 1 = perspective
 		draw_map_lines(mlx, mlx->map);
-	}
+	}*/
 	return (0);
 }

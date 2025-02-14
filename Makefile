@@ -6,7 +6,7 @@
 #    By: badal-la <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/01/23 19:45:10 by badal-la          #+#    #+#              #
-#    Updated: 2025/02/10 16:10:49 by badal-la         ###   ########.fr        #
+#    Updated: 2025/02/13 17:25:02 by badal-la         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -113,17 +113,17 @@ fclean: clean
 	rm -f $(NAME)
 	@make fclean -C $(LIBFT_DIR)
 	@make fclean -C $(PRINTF_DIR)
-#	@make fclean -C $(MLX_DIR)
+	@make fclean -C $(MLX_DIR)
 #	rm -f $(NAME_BONUS)
 	@echo ✅ "Executables and objects files removed\n"
 
 re:	fclean all
 
 test: $(NAME)
-	./$(NAME) test_maps/t1.fdf
+	./$(NAME) test_maps/42.fdf
 
 vtest: $(NAME)
-	valgrind --leak-check=full --show-leak-kinds=all ./$(NAME) test_maps/t1.fdf
+	valgrind --leak-check=full --show-leak-kinds=all ./$(NAME) test_maps/42.fdf
 ##############################################################################
 
 .PHONY: all clean fclean re test

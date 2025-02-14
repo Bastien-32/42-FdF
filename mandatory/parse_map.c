@@ -6,7 +6,7 @@
 /*   By: badal-la <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 17:15:01 by badal-la          #+#    #+#             */
-/*   Updated: 2025/02/11 11:20:17 by badal-la         ###   ########.fr       */
+/*   Updated: 2025/02/13 16:55:43 by badal-la         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,11 +136,6 @@ void	fill_z_max_and_min(t_map *map)
 	}
 }
 
-void	fill_mean_positions(map)
-{
-	
-}
-
 t_map	*parse_map(char *file)
 {
 	t_map	*map;
@@ -153,6 +148,6 @@ t_map	*parse_map(char *file)
 	fill_height_map(file, map);
 	fill_map(file, map);
 	fill_z_max_and_min(map);
-	fill_mean_positions(map);
+	printf("min_z = %d max_z = %d\n", map->min_z, map->max_z);
 	return (map);
 }
